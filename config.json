@@ -1,0 +1,30 @@
+{
+    "Providers": {
+        "zilmain": {
+            "Id": "Zilliqa",
+            "ChainId": "1",
+            "Api": {
+                "HttpUrl": "https://api.zilliqa.com",
+                "TxConfrimMaxAttempts": 15,
+                "TxConfirmIntervalSec": 30
+            }
+        }
+    },
+    "LogLevel": "debug",
+    "Queue": {
+        "Addr": "redis:6379",
+        "User": "",
+        "Password": "",
+        "Job": {
+            "Priority": 1024,
+            "TimeoutSec": 30,
+            "MaxRetry": 5
+        }
+    },
+    "Storage": {
+        "Uri": "",
+        "User": "",
+        "Password": "",
+        "DbName": ""
+    }
+}

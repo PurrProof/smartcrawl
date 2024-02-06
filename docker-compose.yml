@@ -1,0 +1,71 @@
+version: "3.9"
+
+x-app: &app
+  image: purrproof/smartcrawl:latest
+  build:
+    dockerfile: ./.docker/Dockerfile.dev
+    context: .
+    target: dev
+  volumes:
+    - .:/opt/app/smartcrawl
+    - go-modules:/go/pkg/mod
+    - ~/.bash_history:/root/.bash_history
+  environment:
+    #env vars for asynq cli
+    SMARTCRAWL_REDIS_ADDR: "redis:6379"
+    SMARTCRAWL_REDIS_PWD: "123"
+  depends_on:
+    - mongo
+    - redis
+
+services:
+  runner:
+    <<: *app
+    container_name: runner.smartcrawl
+    tty: true
+    stdin_open: true
+    command: /bin/bash
+    entrypoint: ""
+
+  mongo:
+    image: mongo
+    container_name: mongo.smartcrawl
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    env_file:
+      # for now we need only STORAGE_DBNAME for dump/restore script
+      - .env.local
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo-data:/data/db
+
+  #https://stackoverflow.com/questions/68461172/docker-compose-redis-password-via-environment-variable#answer-72593084
+  redis:
+    image: "redis:latest"
+    container_name: redis.smartcrawl
+    command:
+      - /bin/sh
+      - -c
+      # - Double dollars, so that the variable is not expanded by Docker Compose
+      # - Surround by quotes, so that the shell does not split the password
+      # - The ${variable:?message} syntax causes shell to exit with a non-zero
+      #   code and print a message, when the variable is not set or empty
+      - redis-server --requirepass "$${REDIS_PASSWORD:?REDIS_PASSWORD variable is not set}"
+    environment:
+      REDIS_PASSWORD: 123
+    ports:
+      - 6379:6379
+    volumes:
+      - redis-data:/var/lib/redis/data
+      - redis-conf:/usr/local/etc/redis/redis.conf
+    #env_file:
+    #  - .env.prod
+
+volumes:
+  go-modules:
+  mongo-data:
+  redis-data:
+  redis-conf:
