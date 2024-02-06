@@ -1,19 +1,24 @@
+# SmartCrawl
+
+An adaptable framework for gathering, aggregating and analyzing data, focusing on blockchain and smart contracts.
+
 <!-- MarkdownTOC -->
 
-- [Project](#project)
-- [Config](#config)
-- [Provider](#provider)
-- [Item](#item)
-- [Container](#container)
-- [Factory](#factory)
-- [Tasks](#tasks)
-- [Queues](#queues)
-  - [CLI Commands](#cli-commands)
-    - [Launching Workers](#launching-workers)
-    - [Executing Individual Tasks](#executing-individual-tasks)
-    - [Periodic Actions (Cron)](#periodic-actions-cron)
-    - [Cases](#cases)
-    - [Tools](#tools)
+- [SmartCrawl](#smartcrawl)
+  - [Project](#project)
+  - [Config](#config)
+  - [Provider](#provider)
+  - [Item](#item)
+  - [Container](#container)
+  - [Factory](#factory)
+  - [Tasks](#tasks)
+  - [Queues](#queues)
+    - [CLI Commands](#cli-commands)
+      - [Launching Workers](#launching-workers)
+      - [Executing Individual Tasks](#executing-individual-tasks)
+      - [Periodic Actions (Cron)](#periodic-actions-cron)
+      - [Cases](#cases)
+      - [Tools](#tools)
 
 <!-- /MarkdownTOC -->
 
